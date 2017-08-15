@@ -1,9 +1,9 @@
 'use strict';
 
-var COLS = 10,
-    ROWS = 10,
+var COLS = 20,
+    ROWS = 15,
     SIZE = 32,
-    BOMBS = 5;
+    BOMBS = 30;
 
 var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gamePlace', {
   preload: function() {
