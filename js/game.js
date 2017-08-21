@@ -67,7 +67,7 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gamePlace', {
           if(this.blocks[i][j].isActive && !this.blocks[i][j].isVisible) {
             this.activeBlock = this.blocks[i][j];
             this.activeBlocks.push(this.activeBlock);
-            this.findOtherBlocks();
+            this.findOtherBlocks(this.activeBlock);
           }
         }
       }
@@ -76,20 +76,22 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gamePlace', {
     }
   },
 
-  findOtherBlocks: function() {
-
-    this.activeBlock.isActive = true;
-
-    for (var i = 0; i < this.activeBlock.neighbours.length; i++) {
-      if(this.activeBlock.neighbours[i].friends > 0 ||
-        this.activeBlocks.indexOf(this.activeBlock.neighbours[i]) > -1 ||
-        this.activeBlock.neighbours[i].isBomb) {
+  findOtherBlocks: function(block) {
+    block.isActive = true;
+    let blockChanged = false;
+    for (var i = 0; i < block.neighbours.length; i++) {
+      if(block.neighbours[i].friends > 0 ||
+        this.activeBlocks.indexOf(block.neighbours[i]) > -1 ||
+        block.neighbours[i].isBomb) {
         continue;
       }
 
-      this.activeBlocks.push(this.activeBlock.neighbours[i]);
-      this.activeBlock = this.activeBlock.neighbours[i];
-      this.findOtherBlocks();
+      this.activeBlocks.push(block.neighbours[i]);
+      blockChanged = true;
+      this.findOtherBlocks(block.neighbours[i]);
+    }
+
+    if (blockChanged) {
     }
   }
 });
