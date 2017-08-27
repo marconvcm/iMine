@@ -16,11 +16,16 @@ function Block(game, i, j) {
 
   this.number = game.add.text((i * 32) + 12, (j * 32) + 8, '0', style)
 
-  this.sprite.events.onInputDown.add(function() {
-    if(this.isBomb) {
-      console.log("Booom!");
+  this.number.visible = false;
+
+  this.sprite.events.onInputDown.add(function(event, pointer) {
+
+    if(pointer.leftButton.isDown) {
+      if(this.isBomb) {
+        console.log("Booom!");
+      }
+      this.revel();
     }
-    this.revel();
   }, this);
 }
 
@@ -37,14 +42,13 @@ Block.prototype.update = function () {
   }
 
   this.number.text = this.friends;
-
-  //this.number.visible = false;
-
-  if (this.friends == 0 || this.friends == -1) { this.number.visible = false; }
 };
 
 Block.prototype.revel = function () {
   this.isActive = true;
+  if (this.friends > 0) {
+    this.number.visible = true;
+  }
 };
 
 Block.prototype.countBombs = function (blocks) {

@@ -6,11 +6,14 @@ var COLS = 20,
     BOMBS = 30;
 
 var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gamePlace', {
+
   preload: function() {
+    game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
     game.load.image('block_off', 'assets/block.png');
     game.load.image('block_on', 'assets/block2.png');
     game.load.image('bomb', 'assets/bomb.png');
   },
+
   create: function() {
     this.blocks = make2DArray(COLS, ROWS);
 
@@ -53,6 +56,7 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gamePlace', {
 
     console.log(1);
   },
+
   update: function() {
 
     for (var i = 0; i < COLS ; i++) {
